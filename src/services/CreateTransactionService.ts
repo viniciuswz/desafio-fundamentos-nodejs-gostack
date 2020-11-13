@@ -14,6 +14,10 @@ class CreateTransactionService {
   }
 
   public execute({ value, type, title }: RequestDTO): Transaction {
+    const { total } = this.transactionsRepository.getBalance();
+    if (value > total && type === 'outcome') {
+      throw Error('your balance is incompatible');
+    }
     const transaction = this.transactionsRepository.create({
       title,
       type,

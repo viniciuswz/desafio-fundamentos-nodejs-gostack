@@ -48,10 +48,6 @@ class TransactionsRepository {
   }
 
   public create({ title, type, value }: TransactionDTO): Transaction {
-    const balance = this.getBalance();
-    if (value > balance.total && type === 'outcome') {
-      throw Error('your balance is incompatible');
-    }
     const transaction = new Transaction({ value, type, title });
     this.transactions.push(transaction);
 
